@@ -1,0 +1,59 @@
+import RPi.GPIO as GPIO
+import time
+
+# GPIO pins for traffic lights
+red1_pin = 17
+green1_pin = 27
+
+red2_pin = 5
+green2_pin = 6
+
+red3_pin = 19
+green3_pin = 26
+
+red4_pin = 25
+green4_pin = 8
+
+red5_pin = 20
+green5_pin = 21 
+
+
+# Set up GPIO mode and pins
+GPIO.setmode(GPIO.BCM)
+GPIO.setup([red1_pin, green1_pin, red2_pin, green2_pin,
+            red3_pin, green3_pin, red4_pin, green4_pin, red5_pin, green5_pin], GPIO.OUT)
+
+# Function to control the traffic lights
+i = 'ambulance'
+def control_traffic_lights():
+     while True:
+        # Check the value of i to determine the traffic light state
+        if i == 'ambulance':
+            # Set the traffic lights for state 0
+            GPIO.output([green1_pin, red2_pin, red3_pin, red4_pin, green5_pin], GPIO.HIGH)
+            GPIO.output([red1_pin, green2_pin, green3_pin,green4_pin, red5_pin], GPIO.LOW)
+            time.sleep(30)  # Keep lights in this state for 5 seconds
+        else:
+   
+        # Set the traffic lights for lane 1
+            GPIO.output([green1_pin,red2_pin,red3_pin, red4_pin, green5_pin], GPIO.HIGH)
+            GPIO.output([red1_pin, green2_pin, green3_pin, green4_pin, red5_pin], GPIO.LOW)
+            time.sleep(5)  # Keep lights in this state for 5 seconds
+
+        # Set the traffic lights for lane 2
+        GPIO.output([red1_pin, green2_pin, red3_pin, red4_pin, red5_pin], GPIO.HIGH)
+        GPIO.output([green1_pin, red2_pin, green3_pin, green4_pin, green5_pin], GPIO.LOW)
+        time.sleep(5)  # Keep lights in this state for 5 seconds
+
+        # Set the traffic lights for lane 3
+        GPIO.output([green3_pin, red1_pin, red2_pin, red4_pin, red5_pin], GPIO.HIGH)
+        GPIO.output([green1_pin, green2_pin, red3_pin, green4_pin, green5_pin], GPIO.LOW)
+        time.sleep(5)  # Keep lights in this state for 5 seconds
+
+        # Set the traffic lights for lane 4
+        GPIO.output([red1_pin, red2_pin, red3_pin, green4_pin, red5_pin], GPIO.HIGH)
+        GPIO.output([green1_pin, green2_pin, green3_pin, red4_pin, green5_pin], GPIO.LOW)
+        time.sleep(5)  # Keep lights in this state for 5 seconds
+
+# Call the function to start controlling the traffic lights
+control_traffic_lights()
